@@ -73,7 +73,9 @@ def get_sidebar_TRAD_menu():
 
 @register.assignment_tag
 def get_sidebar_ALL_menu():
-    ''' Retrieves 'first_name', 'last_name', and 'slug' of Artists categorized as ALL. '''
+    '''
+    Retrieves 'first_name', 'last_name', and 'slug' of Artists categorized as ALL.
+    '''
     return Artist.artists.active(
                         ).values('slug',
                                  'first_name',
