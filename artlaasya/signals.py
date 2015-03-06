@@ -55,9 +55,10 @@ def deactivate_artworks_of_inactive_artist(sender, instance, created, **kwargs):
     Ensures that all artworks of an artist are deactivated when artist is
     deactivated.
     """
-    if not instance.is_active:
-        _artworks = Artwork.artworks.filter(artist__slug=instance.slug)
-        for _artwork in _artworks:
+    is_active_field_changed = ('is_active' in instance.changed_fields)
+    
+    if (is_active_field_changed and not instance.is_active):
+        for _artwork in instance.artworks_authored.all():
             if _artwork.is_active:
                 _artwork.is_active = False
                 if DJANGO_SAVE_UPDATEABLE:

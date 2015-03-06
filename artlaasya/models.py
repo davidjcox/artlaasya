@@ -17,7 +17,7 @@ from artlaasya.mixins import ModelDiffMixin
 
 class ArtistRatchet(models.Model):
     """
-    Provides a numerical suffix for appendeding to an `Artist` slug so that 
+    Provides a numerical suffix for appending to an `Artist` slug so that 
     uniqueness is ensured in the event more than one artist shares the same 
     name.  The same could be accomplished using the primary key, but this is 
     more uniform and creates more aesthetically pleasing URLs.
@@ -154,7 +154,7 @@ class Genre(ModelDiffMixin, models.Model):
 
 class ArtworkRatchet(models.Model):
     """
-    Provides a numerical suffix for appendeding to an Artwork slug so that 
+    Provides a numerical suffix for appending to an Artwork slug so that 
     uniqueness is ensured in the event more than one artwork shares the same 
     title.  The same could be accomplished using the primary key, but this is 
     more uniform and creates more aesthetically pleasing URLs.
@@ -235,7 +235,7 @@ class Artwork(deepzoom_models.UploadedImage):
                                      help_text="Max 100 characters.")
     
     artist = models.ForeignKey(Artist,
-                               related_name='artwork_artist')
+                               related_name='artworks_authored')
     
     year = models.CharField(max_length=4,
                             blank=True,
@@ -244,7 +244,7 @@ class Artwork(deepzoom_models.UploadedImage):
     is_representative = models.BooleanField(default=False)
     
     genre = models.ForeignKey(Genre,
-                              related_name='artwork_genre')
+                              related_name='artworks_included')
     
     style_class = models.CharField(max_length=4,
                                    choices=STYLE_CHOICES,
@@ -352,7 +352,7 @@ class Artwork(deepzoom_models.UploadedImage):
 
 class EventRatchet(models.Model):
     """
-    Provides a numerical suffix for appendeding to an Event slug so that 
+    Provides a numerical suffix for appending to an Event slug so that 
     uniqueness is ensured in the event more than one event shares the same 
     title.  The same could be accomplished using the primary key, but this is 
     more uniform and creates more aesthetically pleasing URLs.
@@ -407,7 +407,7 @@ class Event(ModelDiffMixin, models.Model):
     
     def get_event_image_filepath(instance, filename):
         _filename = instance.get_sluggified_filename(filename)
-        return os.path.join(settings.DEFAULT_EVENT_IMAGE_ROOT, _filename)
+        return os.path.join(settings._DEFAULT_EVENT_IMAGE_ROOT, _filename)
     
     
     title = models.CharField(max_length=128,
